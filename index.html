@@ -37,8 +37,10 @@
         </div>
         <div id="lyricsView" class="lyrics-view" hidden>
           <div class="lyrics-heading">
-            <p class="eyebrow">NOW READING</p>
+            <p class="eyebrow">NOW PLAYING</p>
             <h2 id="songTitle"></h2>
+            <audio id="audioPlayer" controls preload="none"></audio>
+            <p id="audioStatus" class="audio-status">Audio belum tersedia.</p>
             <a id="sourceLink" href="#" target="_blank" rel="noreferrer">Lihat file Python ↗</a>
           </div>
           <pre id="lyrics"></pre>
