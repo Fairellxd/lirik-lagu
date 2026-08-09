@@ -1,6 +1,7 @@
 const OWNER = "Fairellxd";
 const REPO = "lirik-lagu";
 const API = `https://api.github.com/repos/${OWNER}/${REPO}/contents`;
+const RAW = `https://raw.githubusercontent.com/${OWNER}/${REPO}/main`;
 
 const listEl = document.querySelector("#songList");
 const searchEl = document.querySelector("#search");
@@ -10,12 +11,19 @@ const viewEl = document.querySelector("#lyricsView");
 const titleEl = document.querySelector("#songTitle");
 const lyricsEl = document.querySelector("#lyrics");
 const sourceEl = document.querySelector("#sourceLink");
+const audioEl = document.querySelector("#audioPlayer");
+const audioStatusEl = document.querySelector("#audioStatus");
 
 let songs = [];
 let selected = null;
+let audioFiles = new Map();
 
 function titleFromFile(name) {
   return name.replace(/\.py$/i, "").replace(/[-_]+/g, " ").replace(/\b\w/g, c => c.toUpperCase());
+}
+
+function baseName(name) {
+  return name.replace(/\.[^.]+$/, "").toLowerCase();
 }
 
 function renderList(filter = "") {
@@ -40,9 +48,20 @@ function renderList(filter = "") {
 
 async function loadSongs() {
   try {
-    const res = await fetch(API);
-    if (!res.ok) throw new Error(`GitHub API: ${res.status}`);
-    const files = await res.json();
+    const [songsRes, audioRes] = await Promise.all([
+      fetch(API),
+      fetch(`${API}/audio`)
+    ]);
+
+    if (!songsRes.ok) throw new Error(`GitHub API: ${songsRes.status}`);
+    const files = await songsRes.json();
+
+    if (audioRes.ok) {
+      const audio = await audioRes.json();
+      audio.filter(f => f.type === "file" && /\.(mp3|ogg|wav|m4a)$/i.test(f.name))
+        .forEach(f => audioFiles.set(baseName(f.name), f.download_url));
+    }
+
     songs = files
       .filter(f => f.type === "file" && f.name.toLowerCase().endsWith(".py"))
       .map(f => ({ file: f.name, title: titleFromFile(f.name), url: f.download_url, html: f.html_url }))
@@ -63,6 +82,8 @@ async function openSong(song) {
   sourceEl.href = song.html;
   lyricsEl.textContent = "Memuat...";
 
+  setupAudio(song);
+
   try {
     const res = await fetch(song.url);
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
@@ -71,6 +92,31 @@ async function openSong(song) {
   } catch (err) {
     lyricsEl.textContent = `Gagal memuat lirik: ${err.message}`;
   }
+}
+
+function setupAudio(song) {
+  audioEl.pause();
+  audioEl.removeAttribute("src");
+  audioEl.load();
+
+  const url = audioFiles.get(baseName(song.file));
+  if (!url) {
+    audioEl.hidden = true;
+    audioStatusEl.hidden = false;
+    audioStatusEl.textContent = `Audio belum ada. Upload file dengan nama audio/${baseName(song.file)}.mp3`;
+    return;
+  }
+
+  audioEl.hidden = false;
+  audioStatusEl.hidden = false;
+  audioStatusEl.textContent = "Tekan play untuk memutar audio.";
+  audioEl.src = url;
+
+  audioEl.play().then(() => {
+    audioStatusEl.textContent = "Sedang diputar.";
+  }).catch(() => {
+    audioStatusEl.textContent = "Browser memerlukan klik tombol play untuk mulai memutar audio.";
+  });
 }
 
 function extractLyrics(code) {
