@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Kumpulan lirik lagu dari repository lirik-lagu.">
+  <title>Lirik Lagu — Fairellxd</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main class="app">
+    <header class="hero">
+      <div>
+        <p class="eyebrow">FAIRELLXD • LIRIK LAGU</p>
+        <h1>Lirik Lagu</h1>
+        <p class="subtitle">Semua lagu dari repository <strong>lirik-lagu</strong>, dibuat jadi satu website sederhana.</p>
+      </div>
+      <a class="github" href="https://github.com/Fairellxd/lirik-lagu" target="_blank" rel="noreferrer">GitHub ↗</a>
+    </header>
+
+    <section class="toolbar" aria-label="Kontrol pencarian">
+      <input id="search" type="search" placeholder="Cari judul lagu..." autocomplete="off">
+      <span id="count" class="count">Memuat...</span>
+    </section>
+
+    <section class="layout">
+      <aside class="songs-panel">
+        <h2>Daftar Lagu</h2>
+        <div id="songList" class="song-list" aria-live="polite"></div>
+      </aside>
+
+      <article class="lyrics-panel">
+        <div id="empty" class="empty">
+          <div class="music-icon">♫</div>
+          <h2>Pilih lagu</h2>
+          <p>Pilih salah satu lagu di sebelah kiri untuk melihat liriknya.</p>
+        </div>
+        <div id="lyricsView" class="lyrics-view" hidden>
+          <div class="lyrics-heading">
+            <p class="eyebrow">NOW READING</p>
+            <h2 id="songTitle"></h2>
+            <a id="sourceLink" href="#" target="_blank" rel="noreferrer">Lihat file Python ↗</a>
+          </div>
+          <pre id="lyrics"></pre>
+        </div>
+      </article>
+    </section>
+
+    <footer>Data diambil langsung dari repository GitHub.</footer>
+  </main>
+  <script src="app.js"></script>
+</body>
+</html>
