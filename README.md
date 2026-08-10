@@ -12,7 +12,7 @@ pilihl lagu lalu .py
 
 contoh
 
-sesi potret.py
+python sesi potret.py
 
 
 jalankan ini di terminal,cmd,termux
