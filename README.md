@@ -18,9 +18,11 @@ sesi potret.py
 jalankan ini di terminal,cmd,termux
 
 
-jika ada musik yang di tambahkan tinggal
+jika ada musik yang di tambahkan
 
-
-cd lirik-lagu
+tinggal cd lirik-lagu
 
 dan git pull saja
+
+
+musik yang di tambah bisa requests ke dev dan yang tawu nomer gw cuma temn dekat loh ya:v
