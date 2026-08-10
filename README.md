@@ -6,7 +6,7 @@ git clone https://github.com/Fairellxd/lirik-lagu.git
 
 cd lirik-lagu
 
-ls
+ls/dir
 
 pilihl lagu lalu .py
 
