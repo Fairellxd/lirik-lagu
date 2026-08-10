@@ -5,6 +5,12 @@ lyrics = [
     "The kind where you are nice to me",
     "But only in the evening",
     "So I ask, am I just dreaming?",
+    "i love you so much that's it's dripping..dripping from my arms and such",
+    "im sorry i know im to much to love to trust to nothing but",
+    "i miss that kind of misery",
+    "The kind where you are nice to me",
+    "But only in the evening",
+    "So I ask, am I just dreaming?",
     
 ]
 
